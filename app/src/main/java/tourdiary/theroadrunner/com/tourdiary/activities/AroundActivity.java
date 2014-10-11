@@ -14,19 +14,34 @@ import tourdiary.theroadrunner.com.tourdiary.R;
  * Created by Dobromir on 11.10.2014 г..
  */
 public class AroundActivity extends Activity {
+
+    LocationManager locationManager;
+    LocationListener locationListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.around_activity);
-        LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new MyLocationListener();
+
+        locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new MyLocationListener();
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        locationManager = null;
+        locationListener = null;
     }
 
     class MyLocationListener implements LocationListener{
 
         @Override
         public void onLocationChanged(Location location) {
+
+            //TODO implement logic to find distance between two points
             double longt = location.getLongitude();
             double lat = location.getLatitude();
 
