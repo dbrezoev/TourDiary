@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         buttonDiary.setOnClickListener(this);
         buttonAround.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
+
     }
 
 
