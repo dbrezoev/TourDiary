@@ -1,5 +1,6 @@
 package tourdiary.theroadrunner.com.tourdiary;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,6 +49,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        Intent intent = null;
+        if (v.getId() == R.id.button_diary){
+            intent = new Intent(MainActivity.this, DiaryListActivity.class);
+        }
+        else if (v.getId() == R.id.button_what_is_around){
+            intent = new Intent(MainActivity.this, AroundActivity.class);
+        }
+        else if (v.getId() == R.id.button_add){
+            intent = new Intent(MainActivity.this, AddActivity.class);
+        }
+        startActivity(intent);
     }
 }
