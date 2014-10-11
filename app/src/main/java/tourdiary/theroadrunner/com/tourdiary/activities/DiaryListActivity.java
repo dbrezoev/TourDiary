@@ -1,8 +1,10 @@
-package tourdiary.theroadrunner.com.tourdiary;
+package tourdiary.theroadrunner.com.tourdiary.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+
+import tourdiary.theroadrunner.com.tourdiary.R;
 
 /**
  * Created by Dobromir on 11.10.2014 г..
