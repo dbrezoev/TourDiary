@@ -1,6 +1,10 @@
 package tourdiary.theroadrunner.com.tourdiary.activities;
 
 import android.app.ListActivity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,12 +16,16 @@ import android.widget.Toast;
 import java.util.List;
 
 import tourdiary.theroadrunner.com.tourdiary.R;
-import tourdiary.theroadrunner.com.tourdiary.activities.dao.PlacesDataSource;
 import tourdiary.theroadrunner.com.tourdiary.activities.dao.Place;
+import tourdiary.theroadrunner.com.tourdiary.activities.dao.PlacesDataSource;
 
 
 public class AddActivity extends ListActivity {
     private PlacesDataSource datasource;
+    private LocationManager locationManager;
+    private LocationListener listener;
+    private String latitude;
+    private String longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,9 @@ public class AddActivity extends ListActivity {
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
 
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        listener = new myLocationListener();
+
     }
 
     // Will be called via the onClick attribute
@@ -48,11 +59,11 @@ public class AddActivity extends ListActivity {
                 EditText editText = (EditText) findViewById(R.id.add_to_SQLite);
                 String placeName = editText.getText().toString();
 
-                // save the new comment to the database
+                // save the new place to the database
                 place = datasource.createPlace(placeName);
                 adapter.add(place);
 
-                String toastMessage = placeName + " was successfully added to database!";
+                String toastMessage = placeName +" lat: "+latitude+" lon: "+longitude;//+ " was successfully added to database!";
                 Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete:
@@ -70,6 +81,7 @@ public class AddActivity extends ListActivity {
     protected void onResume() {
         datasource.open();
         super.onResume();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
     }
 
     @Override
@@ -95,5 +107,29 @@ public class AddActivity extends ListActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class myLocationListener implements LocationListener{
+
+        @Override
+        public void onLocationChanged(Location location) {
+            latitude = String.valueOf(location.getLatitude());
+            longitude = String.valueOf(location.getLongitude());
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
     }
 }
