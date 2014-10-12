@@ -14,6 +14,7 @@ import com.telerik.everlive.sdk.core.query.definition.filtering.simple.ValueCond
 import com.telerik.everlive.sdk.core.result.RequestResult;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import models.Place;
 import tourdiary.theroadrunner.com.tourdiary.R;
@@ -34,8 +35,18 @@ public class AroundActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.around_activity);
+        Log.d("In on create","AAAAAAAAAAAA");
 
         app = new EverliveApp(API_KEY);
+
+
+
+//        RequestResult<ArrayList<Place>> requestResult;
+//        requestResult = app.workWith().data(Place.class).getAll().executeSync();
+//        for (Place book : requestResult.getValue()) {
+//            Log.i("App_name", "retrieved book: " + book.getName());
+//        }
+
         RequestResult<Integer> placeCountResult = app.workWith().data(Place.class).getCount().executeSync();
         if (placeCountResult.getSuccess()) {
             Log.d("Success", String.valueOf(placeCountResult.getValue()));
@@ -43,6 +54,7 @@ public class AroundActivity extends Activity {
         else{
             Log.d("FAIL", "No");
         }
+
 //        RequestResult<ArrayList<Place>> requestResult;
 //        requestResult = app.workWith().data(Place.class).getAll().executeSync();
 //        for (Place place : requestResult.getValue()) {
