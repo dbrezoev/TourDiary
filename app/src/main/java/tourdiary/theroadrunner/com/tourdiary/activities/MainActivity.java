@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button buttonAround;
     Button buttonAdd;
 
-    // flag for Internet connection status
+    // Flag for Internet connection status
     Boolean isInternetPresent = false;
 
     // Connection detector class
