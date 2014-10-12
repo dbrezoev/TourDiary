@@ -8,5 +8,5 @@
     <string name="tourist_diary">Your tour Diary</string>
     <string name="what_is_around">See what is around</string>
     <string name="add_to_diary">Add to Diary</string>
-
+    <string name="add_to_SQLite">Where are you now</string>
 </resources>
