@@ -43,29 +43,29 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // creating connection detector class instance
         cd = new ConnectionDetector(getApplicationContext());
 
-        btnStatus.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                // get Internet status
-                isInternetPresent = cd.isConnectingToInternet();
-
-                // check for Internet status
-                if (isInternetPresent) {
-                    // Internet Connection is Present
-                    // make HTTP requests
-                    showAlertDialog(MainActivity.this, "Internet Connection",
-                            "You have internet connection", true);
-                } else {
-                    // Internet connection is not present
-                    // Ask user to connect to Internet
-                    showAlertDialog(MainActivity.this, "No Internet Connection",
-                            "You don't have internet connection.", false);
-                }
-            }
-
-        });
+//        btnStatus.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                // get Internet status
+//                isInternetPresent = cd.isConnectingToInternet();
+//
+//                // check for Internet status
+//                if (isInternetPresent) {
+//                    // Internet Connection is Present
+//                    // make HTTP requests
+//                    showAlertDialog(MainActivity.this, "Internet Connection",
+//                            "You have internet connection", true);
+//                } else {
+//                    // Internet connection is not present
+//                    // Ask user to connect to Internet
+//                    showAlertDialog(MainActivity.this, "No Internet Connection",
+//                            "You don't have internet connection.", false);
+//                }
+//            }
+//
+//        });
     }
 
 
@@ -83,7 +83,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            // get Internet status
+            isInternetPresent = cd.isConnectingToInternet();
+
+            // check for Internet status
+            if (isInternetPresent) {
+                // Internet Connection is Present
+                // make HTTP requests
+                showAlertDialog(MainActivity.this, "Internet Connection",
+                        "You have internet connection", true);
+            } else {
+                // Internet connection is not present
+                // Ask user to connect to Internet
+                showAlertDialog(MainActivity.this, "No Internet Connection",
+                        "You don't have internet connection.", false);
+            }
             return true;
+        }
+        else if(id == R.id.app_info){
+            Intent intent = new Intent(MainActivity.this, AppInfoActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

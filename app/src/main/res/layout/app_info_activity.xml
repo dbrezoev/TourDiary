@@ -10,20 +10,25 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:text="In around actovity"
+        android:text="In app info actovity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
 
-    <EditText android:id="@+id/my_edit"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+    <fragment
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="HINT" />
-
-    <Button
-        android:id="@+id/my_button"
-        android:layout_width="wrap_content"
+        android:name="fragments.FragmentInfo"
+        android:id="@+id/fragmentInfo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        />
+    <fragment
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Push"/>
+        android:name="fragments.FragmentDescription"
+        android:id="@+id/fragmentDescription"
+        android:layout_below="@id/fragmentInfo"
+        android:layout_alignParentLeft="true"
+        />
 </LinearLayout>
