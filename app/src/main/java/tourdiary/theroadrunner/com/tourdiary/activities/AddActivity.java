@@ -44,6 +44,9 @@ public class AddActivity extends ListActivity {
         setListAdapter(adapter);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        latitude = String.valueOf(location.getLatitude());
+        longitude = String.valueOf(location.getLongitude());
         listener = new myLocationListener();
 
     }
