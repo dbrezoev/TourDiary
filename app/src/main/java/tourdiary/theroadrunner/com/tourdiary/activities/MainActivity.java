@@ -17,6 +17,12 @@ import tourdiary.theroadrunner.com.tourdiary.activities.checkConnection.Connecti
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
 
+    private static final String NO_INTERNET_MESSAGE = "You don't have internet connection.";
+    private static final String NO_INTERNET_CONNECTION = "No internet connection";
+
+    private static final String INTERNET_MESSAGE = "You have internet connection.";
+    private static final String INTERNET_CONNECTION = "Internet connection";
+
     Button buttonDiary;
     Button buttonAround;
     Button buttonAdd;
@@ -25,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Boolean isInternetPresent = false;
 
     // Connection detector class
-    ConnectionDetector cd;
+    ConnectionDetector connectionDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,34 +44,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         buttonAround.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
 
-        Button btnStatus = (Button) findViewById(R.id.btn_check);
+        //Button btnStatus = (Button) findViewById(R.id.btn_check);
 
         // creating connection detector class instance
-        cd = new ConnectionDetector(getApplicationContext());
-
-//        btnStatus.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                // get Internet status
-//                isInternetPresent = cd.isConnectingToInternet();
-//
-//                // check for Internet status
-//                if (isInternetPresent) {
-//                    // Internet Connection is Present
-//                    // make HTTP requests
-//                    showAlertDialog(MainActivity.this, "Internet Connection",
-//                            "You have internet connection", true);
-//                } else {
-//                    // Internet connection is not present
-//                    // Ask user to connect to Internet
-//                    showAlertDialog(MainActivity.this, "No Internet Connection",
-//                            "You don't have internet connection.", false);
-//                }
-//            }
-//
-//        });
+        connectionDetector = new ConnectionDetector(getApplicationContext());
     }
 
 
@@ -84,19 +66,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             // get Internet status
-            isInternetPresent = cd.isConnectingToInternet();
+            isInternetPresent = connectionDetector.isConnectingToInternet();
 
             // check for Internet status
             if (isInternetPresent) {
                 // Internet Connection is Present
                 // make HTTP requests
-                showAlertDialog(MainActivity.this, "Internet Connection",
-                        "You have internet connection", true);
+                showAlertDialog(MainActivity.this, INTERNET_CONNECTION,
+                        INTERNET_MESSAGE, true);
             } else {
                 // Internet connection is not present
                 // Ask user to connect to Internet
-                showAlertDialog(MainActivity.this, "No Internet Connection",
-                        "You don't have internet connection.", false);
+                showAlertDialog(MainActivity.this, NO_INTERNET_CONNECTION,
+                        NO_INTERNET_MESSAGE, false);
             }
             return true;
         }
