@@ -9,6 +9,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_PLACES = "places";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
+    public static final String COLUMN_DATE = "date";
 
     private static final String DATABASE_NAME = "places.db";
     private static final int DATABASE_VERSION = 1;
@@ -17,6 +20,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE = "create table "
             + TABLE_PLACES + "(" + COLUMN_ID
             + " integer primary key autoincrement, " + COLUMN_NAME
+            + " text not null, "+ COLUMN_LATITUDE
+            + " text not null, "+ COLUMN_LONGITUDE
+            + " text not null, "+ COLUMN_DATE
             + " text not null);";
 
     public SQLiteHelper(Context context) {

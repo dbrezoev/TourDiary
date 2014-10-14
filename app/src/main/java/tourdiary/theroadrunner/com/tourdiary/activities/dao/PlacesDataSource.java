@@ -15,7 +15,10 @@ public class PlacesDataSource {
     private SQLiteDatabase database;
     private SQLiteHelper dbHelper;
     private String[] allColumns = { SQLiteHelper.COLUMN_ID,
-            SQLiteHelper.COLUMN_NAME };
+            SQLiteHelper.COLUMN_NAME,
+            SQLiteHelper.COLUMN_LATITUDE,
+            SQLiteHelper.COLUMN_LONGITUDE,
+            SQLiteHelper.COLUMN_DATE};
 
     public PlacesDataSource(Context context) {
         dbHelper = new SQLiteHelper(context);
@@ -29,9 +32,12 @@ public class PlacesDataSource {
         dbHelper.close();
     }
 
-    public Place createPlace(String name) {
+    public Place createPlace(String name, String latitude, String longitude, String date) {
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.COLUMN_NAME, name);
+        values.put(SQLiteHelper.COLUMN_LATITUDE, latitude);
+        values.put(SQLiteHelper.COLUMN_LONGITUDE, longitude);
+        values.put(SQLiteHelper.COLUMN_DATE, date);
         long insertId = database.insert(SQLiteHelper.TABLE_PLACES, null,
                 values);
         Cursor cursor = database.query(SQLiteHelper.TABLE_PLACES,
@@ -71,6 +77,9 @@ public class PlacesDataSource {
         Place place = new Place();
         place.setId(cursor.getLong(0));
         place.setName(cursor.getString(1));
+        place.setLatitude(cursor.getString(2));
+        place.setLongitude(cursor.getString(3));
+        place.setDate(cursor.getString(4));
         return place;
     }
 }

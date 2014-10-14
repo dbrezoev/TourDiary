@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 
 import tourdiary.theroadrunner.com.tourdiary.R;
@@ -44,9 +45,9 @@ public class AddActivity extends ListActivity {
         setListAdapter(adapter);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        latitude = String.valueOf(location.getLatitude());
-        longitude = String.valueOf(location.getLongitude());
+       // Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+       // latitude = String.valueOf(location.getLatitude());
+       // longitude = String.valueOf(location.getLongitude());
         listener = new myLocationListener();
 
     }
@@ -61,12 +62,13 @@ public class AddActivity extends ListActivity {
             case R.id.add:
                 EditText editText = (EditText) findViewById(R.id.add_to_SQLite);
                 String placeName = editText.getText().toString();
+                String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
                 // save the new place to the database
-                place = datasource.createPlace(placeName);
+                place = datasource.createPlace(placeName,latitude,longitude,date);
                 adapter.add(place);
 
-                String toastMessage = placeName +" lat: "+latitude+" lon: "+longitude;//+ " was successfully added to database!";
+                String toastMessage = placeName +" date: "+ date;//+ " was successfully added to database!";
                 Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete:
