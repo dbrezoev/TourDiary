@@ -65,11 +65,16 @@ public class AddActivity extends ListActivity {
                 String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
                 // save the new place to the database
-                place = datasource.createPlace(placeName,latitude,longitude,date);
-                adapter.add(place);
+                if(latitude == null || longitude == null){
+                    Toast.makeText(this, "Latitude or longitude cannot be null!", Toast.LENGTH_SHORT).show();
+                } else {
+                    place = datasource.createPlace(placeName, latitude, longitude, date);
+                    adapter.add(place);
 
-                String toastMessage = placeName +" date: "+ date;//+ " was successfully added to database!";
-                Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+                    String toastMessage = placeName + " date: " + date;//+ " was successfully added to database!";
+                    Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.delete:
                 if (getListAdapter().getCount() > 0) {
