@@ -21,12 +21,34 @@ public class Place extends DataItem {
     @ServerProperty("Name")
     private String name;
 
+    @ServerProperty("Description")
+    private String description;
+
+    @ServerProperty("Picture")
+    private UUID pictureId;
+
     public void setName(String name) {
         this.name = name;
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public UUID getPictureId() {
+        return this.pictureId;
+    }
+
+    public void setPictureId(UUID pictureId) {
+        this.pictureId = pictureId;
     }
 
 }
