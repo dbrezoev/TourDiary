@@ -41,8 +41,6 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
                 requestResult = app.workWith().data(Place.class)
                         .getAll().executeSync();
 
-                //Log.i("CREATE", "RRRRRRRRRRRRR");
-
                 if (requestResult.getSuccess()){
                     allPlaces = requestResult.getValue();
                     //Place ev = (Place)requestResult.getValue();
