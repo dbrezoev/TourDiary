@@ -2,6 +2,7 @@ package tourdiary.theroadrunner.com.tourdiary.activities;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -9,8 +10,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -21,12 +25,13 @@ import tourdiary.theroadrunner.com.tourdiary.activities.dao.Place;
 import tourdiary.theroadrunner.com.tourdiary.activities.dao.PlacesDataSource;
 
 
-public class AddActivity extends ListActivity {
+public class AddActivity extends ListActivity implements OnItemClickListener,View.OnClickListener{
     private PlacesDataSource datasource;
     private LocationManager locationManager;
     private LocationListener listener;
     private String latitude;
     private String longitude;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,8 @@ public class AddActivity extends ListActivity {
        // longitude = String.valueOf(location.getLongitude());
         listener = new myLocationListener();
 
+        ListView list = (ListView) findViewById(android.R.id.list);
+        list.setOnItemClickListener(this);
     }
 
     // Will be called via the onClick attribute
@@ -67,14 +74,13 @@ public class AddActivity extends ListActivity {
                 // save the new place to the database
                 if(latitude == null || longitude == null){
                     Toast.makeText(this, "Latitude or longitude cannot be null!", Toast.LENGTH_SHORT).show();
-                } else {
+                }else {
                     place = datasource.createPlace(placeName, latitude, longitude, date);
                     adapter.add(place);
 
                     String toastMessage = placeName + " date: " + date;//+ " was successfully added to database!";
                     Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             case R.id.delete:
                 if (getListAdapter().getCount() > 0) {
@@ -85,6 +91,19 @@ public class AddActivity extends ListActivity {
                 break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        Intent intent = new Intent(AddActivity.this,PlaceInfoActivity.class);
+        ArrayAdapter<Place> adapter = (ArrayAdapter<Place>) getListAdapter();
+        Place temp =(Place) adapter.getItem(position);
+        intent.putExtra("PLACENAME", temp.getName());
+        intent.putExtra("PLACEDATE", temp.getDate());
+        intent.putExtra("PLACELAT", temp.getLatitude());
+        intent.putExtra("PLACELONG", temp.getLongitude());
+        startActivity(intent);
     }
 
     @Override

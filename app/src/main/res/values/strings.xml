@@ -23,4 +23,6 @@
         <item>This app is created for a Telerik Academy Teamwork by Miroslav Gatsanoga and Dobromir Brezoev</item>
     </string-array>
 
+    <string name="title_activity_place_info">PlaceInfoActivity</string>
+
 </resources>
