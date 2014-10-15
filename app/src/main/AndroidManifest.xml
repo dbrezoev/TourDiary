@@ -20,6 +20,7 @@
         <activity android:name=".activities.AroundActivity" />
         <activity android:name=".activities.AddActivity" />
         <activity android:name=".activities.AppInfoActivity" />
+        <activity android:name=".activities.LocationTrackerActivity" />
         <activity
             android:name=".activities.PlaceInfoActivity"
             android:label="@string/title_activity_place_info" >

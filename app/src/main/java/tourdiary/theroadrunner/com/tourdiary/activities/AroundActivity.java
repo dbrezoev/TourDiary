@@ -54,7 +54,7 @@ public class AroundActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.around_activity);
+        setContentView(R.layout.app_info_activity);
 
         app = new EverliveApp("uDwdWIo61CYYVcha");
     }
@@ -64,38 +64,5 @@ public class AroundActivity extends Activity {
         super.onDestroy();
     }
 
-    private class Check extends Thread
-    {
-        @Override
-        public void run() {
-            super.run();
-            while (true) {
-                try {
-                    Thread.sleep(100);
-                    Intent intent = new Intent();
-                    intent.setAction(MY_ACTION);
 
-
-                    RequestResult allItems = app.workWith().data(Place.class)
-                            .getAll().executeSync();
-                    if (allItems.getSuccess()) {
-                        ArrayList boooks = (ArrayList) allItems.getValue();
-                        for (Object book : boooks) {
-                            Place test = (Place) book;
-                            intent.putExtra("DATAPASSED", test.getName());
-                        }
-
-                    }
-
-                    // intent.putExtra("DATAPASSED", "123");
-
-                    sendBroadcast(intent);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
 }

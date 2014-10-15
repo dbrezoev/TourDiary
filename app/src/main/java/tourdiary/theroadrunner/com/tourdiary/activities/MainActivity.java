@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             intent = new Intent(MainActivity.this, DiaryListActivity.class);
         }
         else if (v.getId() == R.id.button_what_is_around){
-            intent = new Intent(MainActivity.this, AroundActivity.class);
+            intent = new Intent(MainActivity.this, LocationTrackerActivity.class);
         }
         else if (v.getId() == R.id.button_add){
             intent = new Intent(MainActivity.this, AddActivity.class);
