@@ -35,5 +35,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--<intent-filter>-->
+        <!--<action android:name="android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+    <!--</intent-filter>-->
 
 </manifest>

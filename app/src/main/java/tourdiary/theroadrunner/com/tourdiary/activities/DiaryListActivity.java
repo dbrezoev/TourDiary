@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +40,9 @@ import tourdiary.theroadrunner.com.tourdiary.activities.dao.MyAdapter;
  */
 public class DiaryListActivity extends Activity implements View.OnClickListener{
 
-    public interface CallBack {
-        void onResult(ArrayList<Place> data);
-    }
+//    public interface CallBack {
+//        void onResult(ArrayList<Place> data);
+//    }
 
     ListView listView;
     EverliveApp app;
@@ -142,6 +143,7 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
 
             title.setText(temporaryPlace.getName());
             description.setText(temporaryPlace.getDescription());
+            description.setMovementMethod(new ScrollingMovementMethod());
 
                         new DownloadImageTask((ImageView)row.findViewById(R.id.imageView))
             .execute(temporaryPlace.getUri());
@@ -176,8 +178,4 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
             bmImage.setImageBitmap(result);
         }
     }
-//    And call from your onCreate() method using:
-//
-//            new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
-//            .execute(MY_URL_STRING);
 }

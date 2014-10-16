@@ -32,11 +32,8 @@ public class FragmentDescription extends Fragment {
     }
 
     public void changeData(int index){
-        //
         Resources resources = getResources();
         String[] arr = resources.getStringArray(R.array.descriptions);
         textView.setText(arr[index]);
-
-        //Toast.makeText(getActivity(), arr[index], Toast.LENGTH_SHORT).show();
     }
 }

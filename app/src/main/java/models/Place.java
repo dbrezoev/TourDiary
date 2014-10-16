@@ -16,7 +16,10 @@ import java.util.UUID;
 @ServerType("Place")
 public class Place extends DataItem {
 
-    //TODO: how to store images? Is it Bitmap?, how to store geo points
+    private static final String WRONG_DESCRIPTION_MESSAGE = "Description of the Place object cannot be null or empty.";
+    private static final String WRONG_NAME_MESSAGE = "Name of the Place object cannot be null or empty.";
+    private static final String INVALID_PICTUREID_MESSAGE = "PictureId cannot be null.";
+    private static final String INVALID_URI_MESSAGE = "Picture URI cannot be null or empty.";
 
     @ServerProperty("Name")
     private String name;
@@ -34,13 +37,11 @@ public class Place extends DataItem {
     @ServerIgnore
     private String uri;
 
-//    public Place(String name, String description, UUID pictureId){
-//        this.name = name;
-//        this.description = description;
-//        this.pictureId = pictureId;
-//    }
-
     public void setName(String name) {
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException(WRONG_NAME_MESSAGE);
+        }
+
         this.name = name;
     }
 
@@ -49,6 +50,10 @@ public class Place extends DataItem {
     }
 
     public void setDescription(String description) {
+        if(description == null || description.isEmpty()){
+            throw new IllegalArgumentException(WRONG_DESCRIPTION_MESSAGE);
+        }
+
         this.description = description;
     }
 
@@ -61,10 +66,18 @@ public class Place extends DataItem {
     }
 
     public void setPictureId(UUID pictureId) {
+        if(pictureId == null){
+            throw new IllegalArgumentException(INVALID_PICTUREID_MESSAGE);
+        }
+
         this.pictureId = pictureId;
     }
 
     public void setUri(String uri){
+        if(uri == null || uri.isEmpty()){
+            throw new IllegalArgumentException(INVALID_URI_MESSAGE);
+        }
+
         this.uri = uri;
     }
 

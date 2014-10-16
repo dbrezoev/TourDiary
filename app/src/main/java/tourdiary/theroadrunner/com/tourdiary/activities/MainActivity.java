@@ -102,6 +102,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         else if (v.getId() == R.id.button_add){
             intent = new Intent(MainActivity.this, AddActivity.class);
         }
+
         startActivity(intent);
     }
 

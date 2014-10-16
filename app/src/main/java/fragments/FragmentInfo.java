@@ -16,8 +16,10 @@ import tourdiary.theroadrunner.com.tourdiary.R;
  * Created by Dobromir on 13.10.2014 г..
  */
 public class FragmentInfo extends Fragment implements AdapterView.OnItemClickListener{
+
     ListView listView;
     Communicator communicator;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_info, container, false);
