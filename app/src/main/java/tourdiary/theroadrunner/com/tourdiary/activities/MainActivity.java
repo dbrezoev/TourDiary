@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import tourdiary.theroadrunner.com.tourdiary.R;
 import tourdiary.theroadrunner.com.tourdiary.activities.checkConnection.ConnectionDetector;
+import tourdiary.theroadrunner.com.tourdiary.activities.dao.Tracker;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
@@ -28,10 +29,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button buttonAround;
     Button buttonAdd;
 
-    // Flag for Internet connection status
     Boolean isInternetPresent = false;
 
-    // Connection detector class
     ConnectionDetector connectionDetector;
 
     @Override
@@ -46,12 +45,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         buttonAround.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
 
-        //Button btnStatus = (Button) findViewById(R.id.btn_check);
-
-        // creating connection detector class instance
         connectionDetector = new ConnectionDetector(getApplicationContext());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,18 +57,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            // get Internet status
+
             isInternetPresent = connectionDetector.isConnectingToInternet();
 
             // check for Internet status
             if (isInternetPresent) {
-                // Internet Connection is Present
-                // make HTTP requests
                 showAlertDialog(MainActivity.this, INTERNET_CONNECTION,
                         INTERNET_MESSAGE, true);
             } else {
@@ -110,22 +101,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void showAlertDialog(Context context, String title, String message, Boolean status) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
 
-        // Setting Dialog Title
         alertDialog.setTitle(title);
 
-        // Setting Dialog Message
         alertDialog.setMessage(message);
 
-        // Setting alert dialog icon
         alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
 
-        // Setting OK Button
         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }
         });
 
-        // Showing Alert Message
         alertDialog.show();
     }
 }

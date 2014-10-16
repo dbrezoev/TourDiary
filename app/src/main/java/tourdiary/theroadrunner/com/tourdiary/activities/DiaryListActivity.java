@@ -134,7 +134,6 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
 
             TextView title = (TextView)row.findViewById(R.id.textView);
             TextView description = (TextView)row.findViewById(R.id.textView2);
-            //ImageView image = (ImageView)row.findViewById(R.id.imageView);
 
             Place temporaryPlace = places.get(position);
 
@@ -144,8 +143,6 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
 
                         new DownloadImageTask((ImageView)row.findViewById(R.id.imageView))
             .execute(temporaryPlace.getUri());
-
-           // image.setImageURI(Uri.parse(temporaryPlace.getUri()));
 
             return row;
         }

@@ -59,8 +59,6 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
         list.setOnItemClickListener(this);
     }
 
-    // Will be called via the onClick attribute
-    // of the buttons
     public void onClick(View view) {
         @SuppressWarnings("unchecked")
         ArrayAdapter<Place> adapter = (ArrayAdapter<Place>) getListAdapter();
@@ -148,17 +146,14 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-
         }
     }
 }
