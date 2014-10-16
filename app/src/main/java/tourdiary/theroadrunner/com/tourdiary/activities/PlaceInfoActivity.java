@@ -6,9 +6,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import tourdiary.theroadrunner.com.tourdiary.R;
 
 public class PlaceInfoActivity extends ActionBarActivity {
+
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +28,29 @@ public class PlaceInfoActivity extends ActionBarActivity {
 
         TextView place_name = (TextView) findViewById(R.id.place_name);
         TextView place_date = (TextView) findViewById(R.id.place_date);
-        TextView place_latitude = (TextView) findViewById(R.id.place_latitude);
-        TextView place_longitude = (TextView) findViewById(R.id.place_longitude);
 
-        place_name.setText(extras.getString("PLACENAME"));
-        place_date.setText(extras.getString("PLACEDATE"));
-        place_latitude.setText(extras.getString("PLACELAT"));
-        place_longitude.setText(extras.getString("PLACELONG"));
+        String name = extras.getString("PLACENAME");
+        String date = extras.getString("PLACEDATE");
+        String latitudeAsString = extras.getString("PLACELAT");
+        String longitudeAsString = extras.getString("PLACELONG");
+
+        place_name.setText(name);
+        place_date.setText(date);
+
+        double latitude = Double.parseDouble(latitudeAsString);
+        double longitude = Double.parseDouble(longitudeAsString);
+
+        LatLng currentLocation = new LatLng(latitude, longitude);
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.place_map))
+                .getMap();
+        Marker currentLocationMarker = map.addMarker(new MarkerOptions().position(currentLocation)
+                .title(name));
+
+        // Move the camera instantly to current location with a zoom of 10.
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10));
+
+        // Zoom in, animating the camera.
+        map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
     }
 
     @Override

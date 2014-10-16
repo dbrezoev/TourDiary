@@ -50,9 +50,9 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
         setListAdapter(adapter);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-       // Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-       // latitude = String.valueOf(location.getLatitude());
-       // longitude = String.valueOf(location.getLongitude());
+        //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //latitude = String.valueOf(location.getLatitude());
+        //longitude = String.valueOf(location.getLongitude());
         listener = new myLocationListener();
 
         ListView list = (ListView) findViewById(android.R.id.list);
@@ -76,7 +76,7 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
                     place = datasource.createPlace(placeName, latitude, longitude, date);
                     adapter.add(place);
 
-                    String toastMessage = placeName + " date: " + date;//+ " was successfully added to database!";
+                    String toastMessage = placeName + " was successfully added to your list!";
                     Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
                 break;
