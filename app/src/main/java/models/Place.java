@@ -24,8 +24,12 @@ public class Place extends DataItem {
     @ServerProperty("Description")
     private String description;
 
+
     @ServerProperty("Picture")
     private UUID pictureId;
+
+    @ServerProperty("Id")
+    private UUID id;
 
     @ServerIgnore
     private String uri;
@@ -68,4 +72,11 @@ public class Place extends DataItem {
         return this.uri;
     }
 
+    public void setUId(UUID id){
+        this.id = id;
+    }
+
+    public UUID getId(){
+        return this.id;
+    }
 }

@@ -2,14 +2,15 @@ package tourdiary.theroadrunner.com.tourdiary.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,23 +18,36 @@ import android.widget.TextView;
 
 import com.telerik.everlive.sdk.core.EverliveApp;
 import com.telerik.everlive.sdk.core.facades.special.DownloadFileAsStreamFacade;
+import com.telerik.everlive.sdk.core.model.system.File;
 import com.telerik.everlive.sdk.core.result.RequestResult;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import models.Place;
 import tourdiary.theroadrunner.com.tourdiary.R;
+import tourdiary.theroadrunner.com.tourdiary.activities.dao.MyAdapter;
 
 /**
  * Created by Dobromir on 11.10.2014 г..
  */
 public class DiaryListActivity extends Activity implements View.OnClickListener{
 
+    public interface CallBack {
+        void onResult(ArrayList<Place> data);
+    }
+
     ListView listView;
     EverliveApp app;
+
     RequestResult<ArrayList<Place>> requestResult;
-    ArrayList<Place> allPlaces;
+    private ArrayList<Place> allPlaces;
 
     @Override
     public void onClick(View v) {
@@ -53,7 +67,7 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_diary_list);
 
         app = new EverliveApp("uDwdWIo61CYYVcha");
-
+        listView = (ListView)this.findViewById(R.id.listViewDiary);
 
         new Thread(new Runnable() {
 
@@ -66,13 +80,19 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
                     allPlaces = requestResult.getValue();
 
                     for(int i = 0; i < allPlaces.size(); i++){
-                        String currentUri = getDownloadLink(allPlaces.get(i).getId());
+                        String currentUri = getDownloadLink(allPlaces.get(i).getPictureId());
                         allPlaces.get(i).setUri(currentUri);
                     }
 
-                    for (Place place : allPlaces) {
-                        Log.i("SUCCESS", "retrieved place: " + place.getName() + "--->" +place.getPictureId() + "--->" + place.getDescription());
-                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            //stuff that updates ui
+                            listView = (ListView)DiaryListActivity.this.findViewById(R.id.listViewDiary);
+                            listView.setAdapter(new CustomAdapter(DiaryListActivity.this));
+                        }
+                    });
                 }
                 else{
                     Log.i("ERROR", "BAD THING HAPPENED");
@@ -81,13 +101,12 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
             }
         }).start();
 
-        listView = (ListView)this.findViewById(R.id.listViewDiary);
-        listView.setAdapter(new CustomAdapter(this));
     }
 
     class CustomAdapter extends BaseAdapter{
 
         Context context;
+        ArrayList<Place> places = requestResult.getValue();
 
         CustomAdapter(Context c){
             this.context = c;
@@ -95,12 +114,12 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
 
         @Override
         public int getCount() {
-            return allPlaces.size();
+            return places.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return allPlaces.get(position);
+            return places.get(position);
         }
 
         @Override
@@ -117,15 +136,48 @@ public class DiaryListActivity extends Activity implements View.OnClickListener{
 
             TextView title = (TextView)row.findViewById(R.id.textView);
             TextView description = (TextView)row.findViewById(R.id.textView2);
-            ImageView image = (ImageView)row.findViewById(R.id.imageView);
+            //ImageView image = (ImageView)row.findViewById(R.id.imageView);
 
-            Place temporaryPlace = allPlaces.get(position);
+            Place temporaryPlace = places.get(position);
 
             title.setText(temporaryPlace.getName());
             description.setText(temporaryPlace.getDescription());
-            image.setImageURI(Uri.parse(temporaryPlace.getUri()));
+
+                        new DownloadImageTask((ImageView)row.findViewById(R.id.imageView))
+            .execute(temporaryPlace.getUri());
+
+           // image.setImageURI(Uri.parse(temporaryPlace.getUri()));
 
             return row;
         }
     }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+//    And call from your onCreate() method using:
+//
+//            new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
+//            .execute(MY_URL_STRING);
 }
