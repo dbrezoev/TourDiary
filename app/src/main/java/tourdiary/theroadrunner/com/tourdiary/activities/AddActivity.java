@@ -1,7 +1,9 @@
 package tourdiary.theroadrunner.com.tourdiary.activities;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -57,6 +60,31 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
 
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setOnItemClickListener(this);
+        list.setLongClickable(true);
+        list.setOnItemLongClickListener(new OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+
+                builder.setMessage(R.string.dialog_message)
+                        .setTitle(R.string.dialog_title);
+
+                AlertDialog dialog = builder.create();
+
+                return true;
+            }
+        });
     }
 
     public void onClick(View view) {
