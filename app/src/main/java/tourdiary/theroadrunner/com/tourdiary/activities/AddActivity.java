@@ -68,16 +68,21 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
                 EditText editText = (EditText) findViewById(R.id.add_to_SQLite);
                 String placeName = editText.getText().toString();
                 String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                boolean isPlaceNameValid = checkIfPlaceNameIsValid(placeName);
 
                 // save the new place to the database
                 if(latitude == null || longitude == null){
                     Toast.makeText(this, "Latitude or longitude cannot be null!", Toast.LENGTH_SHORT).show();
                 }else {
-                    place = datasource.createPlace(placeName, latitude, longitude, date);
-                    adapter.add(place);
+                    if(isPlaceNameValid) {
+                        place = datasource.createPlace(placeName, latitude, longitude, date);
+                        adapter.add(place);
 
-                    String toastMessage = placeName + " was successfully added to your list!";
-                    Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+                        String toastMessage = placeName + " was successfully added to your list!";
+                        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(this, "Place name should be between 1 and 50 symbols!", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case R.id.delete:
@@ -154,6 +159,14 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
 
         @Override
         public void onProviderDisabled(String provider) {
+        }
+    }
+
+    private boolean checkIfPlaceNameIsValid(String placeName){
+        if(placeName != null && placeName.length() > 0 && placeName.length() <= 100){
+                return true;
+        }else{
+            return false;
         }
     }
 }
