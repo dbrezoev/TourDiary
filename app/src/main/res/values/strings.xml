@@ -5,10 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Internet connection</string>
     <string name="app_info">App Info</string>
-    <string name="welcome_message">Welcome to Tour Diary</string>
-    <string name="tourist_diary">Your tour Diary</string>
-    <string name="what_is_around">Show me on map</string>
-    <string name="add_to_diary">Add to Diary</string>
+    <string name="welcome_message">Save your memories with Tour Diary</string>
+    <string name="tourist_diary">National landmarks in Bulgaria</string>
+    <string name="what_is_around">Show me</string>
+    <string name="add_to_diary">Save this place</string>
     <string name="add_to_SQLite">Where are you now</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

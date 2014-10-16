@@ -40,9 +40,6 @@ import tourdiary.theroadrunner.com.tourdiary.activities.dao.MyAdapter;
  */
 public class DiaryListActivity extends Activity implements View.OnClickListener{
 
-//    public interface CallBack {
-//        void onResult(ArrayList<Place> data);
-//    }
 
     ListView listView;
     EverliveApp app;
