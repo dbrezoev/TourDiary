@@ -14,6 +14,9 @@
     <string name="dialog_message">Are you sure that you want to delete this item?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="delete_successful">Item successfully deleted!</string>
+    <string name="null_location">Latitude or longitude cannot be null!</string>
+    <string name="invalid_place_name">Place name should be between 1 and 50 symbols!</string>
 
     <string-array name="titles">
         <item>What is this app about?</item>
@@ -32,6 +35,6 @@
         <item>This app is created for a Telerik Academy Teamwork by Miroslav Gatsanoga and Dobromir Brezoev</item>
     </string-array>
 
-    <string name="title_activity_place_info">PlaceInfoActivity</string>
+    <string name="title_activity_place_info">PlaceInfo</string>
 
 </resources>

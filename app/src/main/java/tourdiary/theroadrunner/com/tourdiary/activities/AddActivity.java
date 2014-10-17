@@ -81,7 +81,7 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
                                 Place place = (Place) getListAdapter().getItem(position);
                                 datasource.deletePlace(place);
                                  adapter.remove(place);
-                                Toast.makeText(AddActivity.this, "Item successfully deleted!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddActivity.this, R.string.delete_successful, Toast.LENGTH_SHORT).show();
                             }
                         })
                         .create().show();
@@ -105,7 +105,7 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
 
                 // save the new place to the database
                 if(latitude == null || longitude == null){
-                    Toast.makeText(this, "Latitude or longitude cannot be null!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.null_location, Toast.LENGTH_SHORT).show();
                 }else {
                     if(isPlaceNameValid) {
                         place = datasource.createPlace(placeName, latitude, longitude, date);
@@ -114,7 +114,7 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
                         String toastMessage = placeName + " was successfully added to your list!";
                         Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(this, "Place name should be between 1 and 50 symbols!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.invalid_place_name, Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
