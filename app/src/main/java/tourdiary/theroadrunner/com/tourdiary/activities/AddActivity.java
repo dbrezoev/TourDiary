@@ -48,7 +48,7 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
 
         // use the SimpleCursorAdapter to show the
         // elements in a ListView
-        ArrayAdapter<Place> adapter = new ArrayAdapter<Place>(this,
+         final ArrayAdapter<Place> adapter = new ArrayAdapter<Place>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
 
@@ -59,28 +59,33 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
         listener = new myLocationListener();
 
         ListView list = (ListView) findViewById(android.R.id.list);
+
         list.setOnItemClickListener(this);
         list.setLongClickable(true);
         list.setOnItemLongClickListener(new OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View v,final int position, long id) {
+                // Create and show the dialog.
+                new AlertDialog.Builder(mContext)
+                        .setMessage(R.string.dialog_message)
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
 
-                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
+                            }
+                        })
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
 
-                builder.setMessage(R.string.dialog_message)
-                        .setTitle(R.string.dialog_title);
+                                Place place = (Place) getListAdapter().getItem(position);
+                                datasource.deletePlace(place);
+                                 adapter.remove(place);
+                                Toast.makeText(AddActivity.this, "Item successfully deleted!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .create().show();
 
-                AlertDialog dialog = builder.create();
 
                 return true;
             }
@@ -111,13 +116,6 @@ public class AddActivity extends ListActivity implements OnItemClickListener,Vie
                     }else{
                         Toast.makeText(this, "Place name should be between 1 and 50 symbols!", Toast.LENGTH_SHORT).show();
                     }
-                }
-                break;
-            case R.id.delete:
-                if (getListAdapter().getCount() > 0) {
-                    place = (Place) getListAdapter().getItem(0);
-                    datasource.deletePlace(place);
-                    adapter.remove(place);
                 }
                 break;
         }
